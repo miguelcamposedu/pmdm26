@@ -1,27 +1,25 @@
 $(document).ready(function () {
     var elementCount = 1;
 
-
-
     // Mostrar modal
-    $("#btn-add-element").on("click", function () {
+    $(document).on("click", "#btn-add-element", function () {
         $("#elementModal").modal('show');
     });
 
     // Add email
-    $("#btn-element-email").on("click", function () {
-        var newElement = `<div class="col-12" id="${elementCount}"><label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type = "email" class="form-control" id = "exampleFormControlInput1" placeholder = "name@example.com" ></div>`;
+    $(document).on("click", "#btn-element-email", function () {
+        var newElement = `<div class="col-12" id="${elementCount}"><label class="form-label">Email address</label>
+            <input type = "email" class="form-control" placeholder = "name@example.com" ></div>`;
         $("#form-elements").append(newElement);
         $("#form-side-list").append(getElement("email"));
         $("#elementModal").modal('hide');
     });
 
     // Add checkbox
-    $("#btn-element-checkbox").on("click", function () {
+    $(document).on("click", "#btn-element-checkbox", function () {
         var newElement = `<div class="form-check" id="${elementCount}">
-  <input class="form-check-input" type="checkbox" value="" id="checkDefault">
-  <label class="form-check-label" for="checkDefault">
+  <input class="form-check-input" type="checkbox" value="">
+  <label class="form-check-label">
     Default checkbox
   </label>
 </div>`;
@@ -30,22 +28,20 @@ $(document).ready(function () {
         $("#elementModal").modal('hide');
     });
 
-
-
     // Add name
-    $("#btn-element-name").on("click", function () {
-        var newElement = `<div class="col-12" id="${elementCount}"><label for="exampleFormControlInput1" class="form-label">Name</label>
-            <input type = "text" class="form-control" id = "exampleFormControlInput1" placeholder = "name" ></div>`;
+    $(document).on("click", "#btn-element-name", function () {
+        var newElement = `<div class="col-12" id="${elementCount}"><label class="form-label">Name</label>
+            <input type = "text" class="form-control" placeholder = "name" ></div>`;
         $("#form-elements").append(newElement);
         $("#form-side-list").append(getElement("name"));
         $("#elementModal").modal('hide');
     });
 
     // Delete item
-    $(".delete-item").on("click", function () {
+    $(document).on("click", ".delete-item", function () {
         var id = $(this).attr("elementid");
         $("#" + id).remove();
-        $(this).remove();
+        $(this).closest(".col-12").remove();
     });
 
     function getElement(type) {
@@ -58,9 +54,8 @@ $(document).ready(function () {
                         <span class="badge text-bg-primary delete-item" elementid="${elementCount++}"><i class="fa-regular fa-square-check"></i> Checkbox</span>
                     </div>`;
         } else {
-
             return `<div class="col-12">
-                        <span class="badge text-bg-primary delete-item" elementid="${elementCount++}"><i class="fa-solid fa-align-left"></i> Name</span>`;
+                        <span class="badge text-bg-primary delete-item" elementid="${elementCount++}"><i class="fa-solid fa-align-left"></i> Name</span> </div>`;
         }
     }
 });
