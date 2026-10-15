@@ -1,0 +1,8 @@
+#screen {
+    width: 400px;
+    min-height: 80px;
+    background-color: black;
+    color: greenyellow;
+    font-size: 60px;
+    text-align: right;
+}
