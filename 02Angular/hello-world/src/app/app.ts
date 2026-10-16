@@ -4,9 +4,10 @@ import { Toolbar } from './components/toolbar/toolbar';
 import { CarItem } from './components/car-item/car-item';
 import { MotorbikeItem } from './components/motorbike-item/motorbike-item';
 import { CarList } from './components/car-list/car-list';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  imports: [RouterOutlet, Toolbar, CarItem, MotorbikeItem, CarList],
+  imports: [RouterOutlet, Toolbar, CarItem, MotorbikeItem, CarList, NgbModule],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

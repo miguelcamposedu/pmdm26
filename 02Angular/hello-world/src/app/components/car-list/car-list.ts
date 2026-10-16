@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CarItem } from '../car-item/car-item';
  const CARS: Car[] = [
 	{
+    id: 1,
 		brand: 'VW',
 		model: 'Polo',
 		doors: 5,
@@ -10,6 +11,7 @@ import { CarItem } from '../car-item/car-item';
     urlPhoto: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/2018_Volkswagen_Polo_SE_1.0_Front.jpg/1280px-2018_Volkswagen_Polo_SE_1.0_Front.jpg?utm_source=es.wikipedia.org&utm_campaign=index&utm_content=thumbnail'
 	},
 	{
+    id: 2,
 		brand: 'VW',
 		model: 'Golf GT',
 		doors: 5,

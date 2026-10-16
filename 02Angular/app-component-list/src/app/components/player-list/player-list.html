@@ -1,0 +1,9 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        @for (item of playerList; track item.id) {
+        <div class="col-md-3 col-12">
+            <app-player-item [player]="item"></app-player-item>
+        </div>
+        }
+    </div>
+</div>

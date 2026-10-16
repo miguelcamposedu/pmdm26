@@ -2,10 +2,12 @@
 
 <button (click)="changeColorTitle()">Change color title</button>
 
-<app-car-item></app-car-item>
-
-
-<app-car-item></app-car-item>
-
-
-<app-car-item></app-car-item>
+<div class="container-fluid">
+    <div class="row">
+        @for(car of carList; track car.id) {
+        <div class="col-md-3 col-12">
+            <app-car-item [car]="car"></app-car-item>
+        </div>
+        }
+    </div>
+</div>
