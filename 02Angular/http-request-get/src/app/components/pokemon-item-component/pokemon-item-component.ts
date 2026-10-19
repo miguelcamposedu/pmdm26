@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Pokemon } from '../../interfaces/pokemon-list-response';
 
 @Component({
   imports: [],
@@ -6,4 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './pokemon-item-component.css',
   templateUrl: './pokemon-item-component.html',
 })
-export class PokemonItemComponent {}
+export class PokemonItemComponent {
+  pokemon = input<Pokemon>();
+
+  constructor() {
+    console.log(this.pokemon);
+    debugger;
+  }
+}
