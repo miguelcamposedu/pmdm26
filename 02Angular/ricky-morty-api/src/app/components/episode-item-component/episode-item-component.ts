@@ -1,4 +1,4 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Episode } from '../../interfaces/episode-list-response';
 
 @Component({
@@ -7,11 +7,6 @@ import { Episode } from '../../interfaces/episode-list-response';
   styleUrl: './episode-item-component.css',
   templateUrl: './episode-item-component.html',
 })
-export class EpisodeItemComponent implements OnInit{
+export class EpisodeItemComponent{
   episode = input<Episode>();
-
-  ngOnInit(): void {
-    console.log(this.episode);
-    debugger;
-  }
 }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { EpisodeService } from '../../services/episode-service';
 import { Episode } from '../../interfaces/episode-list-response';
 import { EpisodeItemComponent } from '../episode-item-component/episode-item-component';
@@ -12,11 +12,13 @@ import { EpisodeItemComponent } from '../episode-item-component/episode-item-com
 export class EpisodeListComponent implements OnInit {
 
   episodeService = inject(EpisodeService);
-  episodeList: Episode[] = [];
+  // ATENCIÓN DECLARAMOS LA VARIABLE DE TIPO SIGNAL
+  episodeList = signal<Episode[]>([]);
 
   ngOnInit(): void {
     this.episodeService.getAllEpisodes().subscribe(resp => {
-      this.episodeList = resp.results;
+      // Y AQUÍ SETEAMOS UN NUEVO VALOR DEL SIGNAL
+      this.episodeList.set(resp.results);
     });
   }
 }
