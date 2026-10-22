@@ -1,1 +1,1 @@
-<p>{{episode()?.name}} ({{episode()?.air_date}})</p>
+<p><a [routerLink]="['/episode-detail', episode()?.id]">{{episode()?.name}} ({{episode()?.air_date}})</a></p>
