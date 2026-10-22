@@ -1,6 +1,9 @@
 export interface EpisodeDetailResponse {
-  userId: number
   id: number
-  title: string
-  completed: boolean
+  name: string
+  air_date: string
+  episode: string
+  characters: string[]
+  url: string
+  created: string
 }
