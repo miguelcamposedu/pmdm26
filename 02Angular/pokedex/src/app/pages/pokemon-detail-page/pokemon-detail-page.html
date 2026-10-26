@@ -1,0 +1,340 @@
+<div class="container max-width-lg">
+
+    <!-- Top Toolbar (Demo Controls for Interactive Switcher) -->
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6 mb-3 mb-md-0">
+            <h4 class="fw-bold mb-0 text-dark">
+                <i class="bi bi-journal-album text-danger me-2"></i>Vista Previa de Componente Angular
+            </h4>
+            <small class="text-muted">Prototipo UI renderizado con Signals: <code>pokemonInfo()</code></small>
+        </div>
+        <div class="col-md-6">
+            <div class="d-flex justify-content-md-end gap-2">
+                <!-- Switcher para probar con varios Pokémon -->
+                <select id="pokemonSelect" class="form-select form-select-sm w-auto rounded-pill shadow-sm"
+                    onchange="changeDemoPokemon(this.value)">
+                    <option value="6">Charizard (#0006)</option>
+                    <option value="9">Blastoise (#0009)</option>
+                    <option value="3">Venusaur (#0003)</option>
+                    <option value="25">Pikachu (#0025)</option>
+                    <option value="94">Gengar (#0094)</option>
+                    <option value="448">Lucario (#0448)</option>
+                </select>
+
+                <button class="btn btn-sm btn-outline-dark rounded-pill px-3 shadow-sm" onclick="toggleShinyState()">
+                    <i class="bi bi-stars text-warning me-1"></i> <span id="shinyBtnText">Ver Shiny</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================================================= -->
+    <!--  INICIO DEL CÓDIGO HTML ANGULAR (Copiar este bloque de plantillas para tu archivo .component.html) -->
+    <!-- ============================================================================================= -->
+
+    <!-- Angular Directiva @if para validar que los datos existen -->
+    @if (pokemonInfo(); as pokemon) {
+    <div id="pokemonDetailContainer" class="row g-4">
+
+        <!-- LEFT COLUMN: Main Visual Card & Essential Stats -->
+        <div class="col-lg-5 col-xl-4">
+            <div class="card pokemon-card glass-card h-100">
+
+                <!-- Dynamic Header Background based on Primary Type -->
+                <div id="heroBanner" class="hero-banner bg-type-fire text-white transition-all">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-black bg-opacity-25 rounded-pill px-3 py-2 font-monospace fs-6"
+                            id="pokeId">
+                            #0006
+                        </span>
+                        <div class="d-flex gap-2 align-items-center">
+                            <span class="badge bg-white text-dark rounded-pill px-2 py-1 small" title="Experiencia Base"
+                                id="pokeBaseExp">
+                                <i class="bi bi-lightning-charge-fill text-warning"></i> 267 EXP
+                            </span>
+                            <button id="cryButton" class="btn btn-light btn-sm rounded-circle shadow-sm"
+                                onclick="playCry()" title="Escuchar Grito del Pokémon">
+                                <i class="bi bi-volume-up-fill text-danger fs-6"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Pokemon Official Artwork -->
+                    <div class="poke-art-wrapper my-3">
+                        <img id="mainPokeSprite"
+                            [src]="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonInfo()?.id}.png`"
+                            alt="Pokemon Image" class="poke-art"
+                            onerror="this.src='https://via.placeholder.com/250?text=No+Sprite'">
+                    </div>
+
+                    <!-- Name and Type Badges -->
+                    <div class="text-center mt-2">
+                        <h2 id="pokeName" class="fw-extrabold text-capitalize mb-2 text-white drop-shadow">
+                            {{pokemonInfo()?.name}}
+                        </h2>
+                        <div id="pokeTypes" class="d-flex justify-content-center gap-2 flex-wrap">
+                            @for(pokemonType of pokemonInfo()?.types; track pokemonType.slot) {
+                            <span [class]="['type-badge', getTypeClass(pokemonType.type.name)]">{{pokemonType.type.name
+                                |
+                                uppercase}}</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Body: Physical Characteristics & Primary Abilities -->
+                <div class="card-body p-4">
+
+                    <!-- Quick Characteristics Grid -->
+                    <div class="row text-center py-2 bg-light rounded-4 g-2 mb-4">
+                        <div class="col-4 border-end">
+                            <small class="text-muted d-block text-uppercase fw-semibold"
+                                style="font-size: 0.7rem;">Altura</small>
+                            <span class="fw-bold text-dark fs-6" id="pokeHeight">1.7 m</span>
+                        </div>
+                        <div class="col-4 border-end">
+                            <small class="text-muted d-block text-uppercase fw-semibold"
+                                style="font-size: 0.7rem;">Peso</small>
+                            <span class="fw-bold text-dark fs-6" id="pokeWeight">90.5 kg</span>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted d-block text-uppercase fw-semibold"
+                                style="font-size: 0.7rem;">Orden</small>
+                            <span class="fw-bold text-dark fs-6" id="pokeOrder">#7</span>
+                        </div>
+                    </div>
+
+                    <!-- Abilities Section -->
+                    <div class="mb-3">
+                        <h6 class="fw-bold text-secondary text-uppercase small mb-2">
+                            <i class="bi bi-magic me-1"></i> Habilidades
+                        </h6>
+                        <div id="pokeAbilities" class="d-flex flex-wrap gap-2">
+                            <span
+                                class="badge bg-white text-dark border rounded-pill px-3 py-2 text-capitalize fw-normal shadow-sm">
+                                blaze <small class="text-muted">(Ranura 1)</small>
+                            </span>
+                            <span
+                                class="badge bg-warning bg-opacity-10 text-dark border border-warning rounded-pill px-3 py-2 text-capitalize fw-normal shadow-sm">
+                                solar-power <i class="bi bi-eye-slash-fill ms-1 text-warning"
+                                    title="Habilidad Oculta"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Held Items (If exists) -->
+                    <div class="mb-1">
+                        <h6 class="fw-bold text-secondary text-uppercase small mb-2">
+                            <i class="bi bi-bag-check me-1"></i> Objetos Equipables
+                        </h6>
+                        <div id="pokeHeldItems" class="d-flex flex-wrap gap-2">
+                            <span
+                                class="badge bg-light text-secondary border rounded-pill px-3 py-1 font-monospace small">
+                                Ningún objeto registrado
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Detailed Information Tabs -->
+        <div class="col-lg-7 col-xl-8">
+            <div class="card pokemon-card glass-card h-100">
+                <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
+                    <!-- Navigation Tabs -->
+                    <ul class="nav nav-pills card-header-pills gap-2" id="pokeDetailTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="stats-tab" data-bs-toggle="tab"
+                                data-bs-target="#stats-panel" type="button" role="tab">
+                                <i class="bi bi-bar-chart-line-fill me-1"></i> Estadísticas Base
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="moves-tab" data-bs-toggle="tab" data-bs-target="#moves-panel"
+                                type="button" role="tab">
+                                <i class="bi bi-lightning-charge me-1"></i> Movimientos
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="sprites-tab" data-bs-toggle="tab"
+                                data-bs-target="#sprites-panel" type="button" role="tab">
+                                <i class="bi bi-images me-1"></i> Galería de Sprites
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="game-tab" data-bs-toggle="tab" data-bs-target="#game-panel"
+                                type="button" role="tab">
+                                <i class="bi bi-controller me-1"></i> Juegos & Ubicación
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body p-4">
+                    <div class="tab-content" id="pokeTabContent">
+
+                        <!-- TAB 1: BASE STATS -->
+                        <div class="tab-pane fade show active" id="stats-panel" role="tabpanel">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h6 class="fw-bold text-uppercase text-secondary mb-0">Atributos de Combate</h6>
+                                <span class="badge bg-dark text-white rounded-pill px-3 py-1"
+                                    id="totalStatsBadge">Total: 534</span>
+                            </div>
+
+                            <!-- Base Stats List -->
+                            <div id="statsList" class="d-flex flex-column gap-3">
+                                <!-- HP -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">PS (HP)</span>
+                                        <span>78 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 30%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Attack -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">Ataque (Attack)</span>
+                                        <span>84 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 33%"></div>
+                                    </div>
+                                </div>
+                                <!-- Defense -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">Defensa (Defense)</span>
+                                        <span>78 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Sp Attack -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">At. Esp. (Sp. Atk)</span>
+                                        <span>109 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 42%">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Sp Defense -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">Def. Esp. (Sp. Def)</span>
+                                        <span>85 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 33%"></div>
+                                    </div>
+                                </div>
+                                <!-- Speed -->
+                                <div>
+                                    <div class="d-flex justify-content-between small fw-bold mb-1">
+                                        <span class="text-uppercase text-secondary">Velocidad (Speed)</span>
+                                        <span>100 / 255</span>
+                                    </div>
+                                    <div class="progress stat-progress">
+                                        <div class="progress-bar bg-danger bg-gradient" role="progressbar"
+                                            style="width: 39%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Effort Values (EVs) Summary -->
+                            <div class="mt-4 p-3 bg-light rounded-4">
+                                <h6 class="fw-bold small text-uppercase text-secondary mb-2">Puntos de Esfuerzo (EVs
+                                    Ganados):</h6>
+                                <div id="effortValues" class="d-flex flex-wrap gap-2">
+                                    <span class="badge bg-secondary rounded-pill fw-normal">Sp. Atk: +3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB 2: MOVES LIST -->
+                        <div class="tab-pane fade" id="moves-panel" role="tabpanel">
+                            <div
+                                class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-2">
+                                <h6 class="fw-bold text-uppercase text-secondary mb-0">Movimientos Aprendibles</h6>
+                                <input type="text" id="moveSearchInput"
+                                    class="form-select form-select-sm w-auto rounded-pill"
+                                    placeholder="Buscar movimiento..." onkeyup="filterMoves()">
+                            </div>
+
+                            <div class="table-responsive style-scroll" style="max-height: 380px; overflow-y: auto;">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light sticky-top">
+                                        <tr class="small text-uppercase text-muted">
+                                            <th>Movimiento</th>
+                                            <th>Método</th>
+                                            <th class="text-center">Nivel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="movesTableBody" class="font-monospace small">
+                                        <!-- Renderizado de movimientos dinámicamente -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- TAB 3: SPRITES & GALLERY -->
+                        <div class="tab-pane fade" id="sprites-panel" role="tabpanel">
+                            <h6 class="fw-bold text-uppercase text-secondary mb-3">Otras Formas y Sprites Históricos
+                            </h6>
+
+                            <div class="row g-3" id="spritesGallery">
+                                <!-- Sprites renderizados por JS o Angular @for -->
+                            </div>
+                        </div>
+
+                        <!-- TAB 4: GAMES & LOCATIONS -->
+                        <div class="tab-pane fade" id="game-panel" role="tabpanel">
+                            <div class="mb-4">
+                                <h6 class="fw-bold text-uppercase text-secondary mb-2">Apariciones en Ediciones de
+                                    Juegos</h6>
+                                <div id="gameIndicesList" class="d-flex flex-wrap gap-1 max-height-200 overflow-auto">
+                                    <!-- Badges de versiones -->
+                                </div>
+                            </div>
+
+                            <div class="p-3 bg-light rounded-4">
+                                <h6 class="fw-bold text-uppercase text-secondary mb-2">
+                                    <i class="bi bi-geo-alt-fill text-danger me-1"></i> Área de Encuentros Local
+                                </h6>
+                                <p class="small text-muted mb-0" id="encounterLocationText">
+                                    Consultando Pokédex regional...
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    } @else {
+    <!-- Template alternativo cuando pokemonInfo() es undefined -->
+    <div id="loadingState" class="text-center py-5 d-none">
+        <div class="spinner-border text-danger mb-3" style="width: 3rem; height: 3rem;" role="status">
+            <span class="visually-hidden">Cargando Pokémon...</span>
+        </div>
+        <h5 class="text-muted fw-bold">Cargando datos del Pokémon...</h5>
+    </div>
+    }
+
+    <!-- ============================================================================================= -->
+    <!--  FIN DEL CÓDIGO HTML ANGULAR                                                                  -->
+    <!-- ============================================================================================= -->
+
+</div>
