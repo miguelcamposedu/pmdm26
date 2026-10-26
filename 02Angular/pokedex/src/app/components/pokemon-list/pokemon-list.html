@@ -1,0 +1,12 @@
+<!-- Wrap the rest of the page in another container to center all the content. -->
+<div class="container marketing"> <!-- Three columns of text below the carousel -->
+    <div class="row">
+
+        @for(p of pokemonList(); track p.name) {
+        <div class="col-lg-4">
+            <app-pokemon-item [pokemon]="p"></app-pokemon-item>
+        </div>
+        }
+
+    </div><!-- /.row -->
+</div><!-- /.container -->
