@@ -1,0 +1,18 @@
+<!-- Template: one way data binding (sintaxis moustache {{}}) -->
+<p>{{texto}}</p>
+
+<!-- Property binding: one way data binding -->
+<p [class]="getClassParagraph()">Hola Mundo</p>
+
+<!-- Template driven: two way data binding (banana in a box [()]) -->
+<div class="form-field">
+    <label for="fieldText" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="fieldText" placeholder="name@example.com" [(ngModel)]="emailForm">
+    <div class="form-text">
+        El valor del email es: {{emailForm}}
+    </div>
+</div>
+
+<button type="button" (click)="sendForm()" class="theme-primary btn-solid btn-styled">
+    Enviar formular
+</button>
