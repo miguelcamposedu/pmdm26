@@ -1,0 +1,9 @@
+<section class="card" style="max-width: 320px">
+    <img [src]="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${getPokemonId()}.png`"
+        class="card-img-top" alt="...">
+    <div class="card-body">
+        <h4 class="card-title">{{pokemon()?.name}}</h4>
+        <p class="card-text">({{pokemon()?.url}})</p>
+        <button type="button" class="btn-solid theme-primary" (click)="emitPokemonClicked()">View detail</button>
+    </div>
+</section>

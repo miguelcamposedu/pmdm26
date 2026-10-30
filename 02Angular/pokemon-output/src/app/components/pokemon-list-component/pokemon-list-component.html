@@ -1,0 +1,10 @@
+<h1>Pokémons</h1>
+
+<div class="row">
+    @for(pok of pokemonList(); track pok.name) {
+    <div class="col-md-3">
+        <app-pokemon-item-component [pokemon]="pok"
+            (pokemonClicked)="openPokemonModal($event)"></app-pokemon-item-component>
+    </div>
+    }
+</div>
