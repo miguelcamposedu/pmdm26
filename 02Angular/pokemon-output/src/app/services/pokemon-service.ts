@@ -13,7 +13,10 @@ export class PokemonService {
         return this.http.get<PokemonListResponse>('https://pokeapi.co/api/v2/pokemon/');
     }
 
-        getOne(id: string):  Observable<PokemonDetailResponse> {
+    // STEP4: declaro, mi servicio, un nuevo método que me obtiene la información 
+    // de un Pokémon a partir del ID de ese Pokémon.
+
+    getOne(id: string):  Observable<PokemonDetailResponse> {
         return this.http.get<PokemonDetailResponse>(`https://pokeapi.co/api/v2/pokemon/${id}`);
     }
 }

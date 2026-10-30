@@ -25,11 +25,16 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
+  // STEP10: en este método voy a recibir el ID del Pokémon, que me ha enviado por el output el componente Hijo
+  // y voy a abrir un modal con la información de ese Pokémon
   openPokemonModal(id: string) {
-        console.log('Pokemon id recibido: '+id);
+    // definimos la llamada al servicio PokemonService, que me devuelve la información de un Pokémon a partir de su IDE
     this.pokemonService.getOne(id).subscribe(resp => {
-      const modalRef = this.modalService.open(PokemonModal);
-		modalRef.componentInstance.name = resp.name;
+
+      // STEP12: abro el modal que está declarado en el componente PokewmonModal y le paso la información del detalle que he recibido de la API
+          const modalRef = this.modalService.open(PokemonModal);
+		      modalRef.componentInstance.pokemonDetail = resp;
     });
+
   }
 }

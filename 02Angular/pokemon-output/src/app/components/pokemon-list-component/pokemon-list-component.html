@@ -3,6 +3,15 @@
 <div class="row">
     @for(pok of pokemonList(); track pok.name) {
     <div class="col-md-3">
+        <!-- STEP9: en el componente padre, a la hora de declarar que quiero dibujar el componente Hijo, 
+         declaro dos cosas:
+         1) la propiedad [pokemon]="pok", donde le paso el Pokémon que quiero dibujar
+         2) el evento del que quiero estar pendiente por si me emiten un nuevo valor que sería cuando 
+         hagan clic en un Pokémon del componente hijo, en concreto en el botón donde he puesto el evento "click"
+
+        El evento que he definido como pokemonClicked, debe ser gestionado a nivel de componente padre,
+        por un método que yo defina que, que en este caso he llamado openPokemonModal, que además recibe
+        la variable $event, donde se recibe el "id" que ha sido emitido desde el component hijo -->
         <app-pokemon-item-component [pokemon]="pok"
             (pokemonClicked)="openPokemonModal($event)"></app-pokemon-item-component>
     </div>

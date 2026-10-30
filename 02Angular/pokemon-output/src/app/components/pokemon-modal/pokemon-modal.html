@@ -3,7 +3,10 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
 </div>
 <div class="modal-body">
-    <p>Pokemon: {{ name }}!</p>
+    <img [src]="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonDetail?.id}.png`"
+        class="card-img-top" alt="...">
+    <p>Pokemon: {{ pokemonDetail?.name }}!</p>
+    <p>Height: {{ pokemonDetail?.height}}</p>
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="activeModal.close()">Close</button>
