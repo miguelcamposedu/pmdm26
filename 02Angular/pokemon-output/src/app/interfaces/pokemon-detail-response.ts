@@ -2,7 +2,11 @@
 // STEP3: defino con la web JSON to TS (https://transform.tools/json-to-typescript) las interfaces que forman parte de la respuesta para obtener los datos de un Pokémon a partir del IDE o del nombre de este
 
 // la otra opción es usar la extensión de VSCode Quicktype for JSON
-// en esta caso tienes que teclear CTRL+Shift+P y elegir "Paste JSON as code"
+// en esta caso tienes que 1. Copiar el JSON de respuesta del API
+// 2. teclear en VSCode CTRL+Shift+P y elegir "Paste JSON as code"
+// Te preguntará el nombre que quieres darle a la interface padre del JSON
+// ¡RECORDAD! que estamos nombrando una interface, por lo tanto el 
+// nombre tiene que seguir la sintaxis Upper Camel Case
 
 export interface PokemonDetailResponse {
   id:                       number;

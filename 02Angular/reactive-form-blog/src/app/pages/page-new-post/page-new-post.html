@@ -1,0 +1,50 @@
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="mb-3">
+                <label for="exampleInputTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="exampleInputTitle" [formControl]="title">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea" class="form-label">Description</label>
+                <textarea class="form-control" id="exampleFormControlTextarea" rows="3"
+                    [formControl]="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" [formControl]="category">
+                    <option value="" selected>-Select one-</option>
+                    <option value="1">Tecnología</option>
+                    <option value="2">Diseño</option>
+                    <option value="3">Programación</option>
+                    <option value="4">Novedades</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTags" class="form-label">Tags</label>
+                <input type="email" class="form-control" id="exampleFormControlTags" placeholder="Tag1, Tag2,..."
+                    [formControl]="tags">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
+                    [formControl]="email">
+            </div>
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1" (click)="updatePublishLater()">
+                <label class="form-check-label" for="exampleCheck1">Publish later</label>
+            </div>
+            @if(publishLater) {
+            <div class="mb-3">
+                <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [formControl]="publishDate"
+                        ngbDatepicker #d="ngbDatepicker" />
+                    <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()"
+                        type="button"></button>
+                </div>
+            </div>
+            }
+            <button type="button" class="btn btn-primary" (click)="formSubmit()">Submit</button>
+        </div>
+    </div>
+
+</form>
