@@ -18,16 +18,7 @@ export class RegisterFormPage {
   });
 
   isInvalidField(field: string) {
-    debugger;
-    const isInvalid = this.registerForm.get(field)?.invalid;
-    return isInvalid;
+    return this.registerForm.get(field)?.invalid && (this.registerForm.get(field)?.dirty || this.registerForm.get(field)?.touched);
   }
 
-  isDirtyField(field: string) {
-    return this.registerForm.get(field)?.dirty;
-  }
-
-  isTouchedField(field: string) {
-    return this.registerForm.get(field)?.touched;
-  }
 }

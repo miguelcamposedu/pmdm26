@@ -1,21 +1,23 @@
 <form [formGroup]="registerForm" class="row">
     <div class="col-auto">
         <label for="first-name" class="form-label">First Name <span class="text-danger">*</span> </label>
-        <input id="first-name" type="text" formControlName="firstName" class="form-control" />
-        @if(isInvalidField('firstName') && (isDirtyField('firstName') || isTouchedField('firstName'))) {
+        <input id="first-name" type="text" formControlName="firstName" class="form-control"
+            [class.is-invalid]="isInvalidField('firstName')" />
+        @if(isInvalidField('firstName')) {
         <div class="invalid-feedback">
-            Please choose a username.
-        </div>
-        }
-        @if(!isInvalidField('firstName') && (isDirtyField('firstName') || isTouchedField('firstName'))) {
-        <div class="valid-feedback">
-            Looks great!
+            Min 3 characters
         </div>
         }
     </div>
     <div class="col-auto">
         <label for="last-name" class="form-label">Last Name <span class="text-danger">*</span></label>
-        <input id="last-name" type="text" formControlName="lastName" class="form-control" />
+        <input id="last-name" type="text" formControlName="lastName" class="form-control"
+            [class.is-invalid]="isInvalidField('firstName')" />
+        @if(isInvalidField('lastName')) {
+        <div class="invalid-feedback">
+            Please choose a first name.
+        </div>
+        }
     </div>
     <div class="col-auto">
         <label for="last-name" class="form-label">Email <span class="text-danger">*</span></label>
